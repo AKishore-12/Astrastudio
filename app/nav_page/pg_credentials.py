@@ -19,11 +19,12 @@ class PageCredentials:
         self.name = "Credentials"
 
     def init_session_state(self):
-        if "env_vars" not in ss:
+        if "credentials_initialized" not in ss:
             ss.env_vars = {
                 key: os.getenv(key, cfg.get("default", ""))
                 for key, cfg in CREDENTIAL_FIELDS.items()
             }
+            ss.credentials_initialized = True
 
 
     def apply_credentials(self):
