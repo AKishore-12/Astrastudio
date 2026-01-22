@@ -44,9 +44,19 @@ class MyCrew:
         # Create a dictionary to hold the Task objects
         task_objects = {}
 
-        def create_task(task):
+        def create_task(task, visiting=None):
+            if visiting is None:
+                visiting = set()
+
+            if task.id in visiting:
+                raise ValueError(
+                    f"Circular task dependency detected in crew '{self.name}' for task '{task.description[:50]}'"
+                )
+
             if task.id in task_objects:
                 return task_objects[task.id]
+
+            visiting.add(task.id)
 
             context_tasks = []
             if task.async_execution or task.context_from_async_tasks_ids or task.context_from_sync_tasks_ids:
@@ -54,7 +64,7 @@ class MyCrew:
                     if context_task_id not in task_objects:
                         context_task = next((t for t in self.tasks if t.id == context_task_id), None)
                         if context_task:
-                            context_tasks.append(create_task(context_task))
+                            context_tasks.append(create_task(context_task, visiting=visiting))
                         else:
                             print(f"Warning: Context task with id {context_task_id} not found for task {task.id}")
                     else:

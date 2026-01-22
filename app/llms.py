@@ -51,7 +51,7 @@ def create_openai_llm(model, temperature):
     if api_key:
         return LLM(model=model, temperature=temperature, base_url=api_base)
     else:
-        raise ValueError("OpenAI API key not set in .env file")
+        raise ValueError("OpenAI API key not set in Credentials")
 
 def create_gemini_llm(model, temperature):
     switch_environment({
@@ -63,7 +63,7 @@ def create_gemini_llm(model, temperature):
     if api_key:
         return LLM(model=model, temperature=temperature, api_key=api_key)
     else:
-        raise ValueError("Gemini API key not set in .env file")
+        raise ValueError("Gemini API key not set in Credentials")
 
 def create_anthropic_llm(model, temperature):
     switch_environment({
@@ -79,7 +79,7 @@ def create_anthropic_llm(model, temperature):
             max_tokens=4095,
         )
     else:
-        raise ValueError("Anthropic API key not set in .env file")
+        raise ValueError("Anthropic API key not set in Credentials")
 
 def create_groq_llm(model, temperature):
     switch_environment({
@@ -90,7 +90,7 @@ def create_groq_llm(model, temperature):
     if api_key:
         return ChatGroq(groq_api_key=api_key, model_name=model, temperature=temperature, max_tokens=4095)
     else:
-        raise ValueError("Groq API key not set in .env file")
+        raise ValueError("Groq API key not set in Credentials")
 
 def create_ollama_llm(model, temperature):
     host = st.session_state.env_vars["OLLAMA_HOST"]
@@ -101,7 +101,7 @@ def create_ollama_llm(model, temperature):
         })
         return LLM(model=model, temperature=temperature, base_url=host)
     else:
-        raise ValueError("Ollama Host is not set in .env file")
+        raise ValueError("Ollama Host is not set in Credentials")
 
 
 def create_xai_llm(model, temperature):
@@ -109,7 +109,7 @@ def create_xai_llm(model, temperature):
     api_key = st.session_state.env_vars.get("XAI_API_KEY")
 
     if not api_key:
-        raise ValueError("XAI_API_KEY must be set in .env file")
+        raise ValueError("XAI API key not set in Credentials")
 
     switch_environment({
         "OPENAI_API_KEY": api_key,
@@ -138,7 +138,7 @@ def create_lmstudio_llm(model, temperature):
             max_tokens=4095,
         )
     else:
-        raise ValueError("LM Studio API base not set in .env file")
+        raise ValueError("LM Studio API base not set in Credentials")
 
 LLM_CONFIG = {
     "OpenAI": {
