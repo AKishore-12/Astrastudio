@@ -84,5 +84,6 @@ class PageCredentials:
                 "XAI_API_KEY": None,
             }
             st.session_state.credentials_initialized = True
+            self.apply_credentials()
             st.rerun()
 
