@@ -70,3 +70,8 @@ class PageCredentials:
         st.markdown("<br>", unsafe_allow_html=True)
 
         st.button("Apply credentials", on_click=self.apply_credentials)
+
+        if st.button("Clear session credentials"):
+            for k in list(st.session_state.get("env_vars", {}).keys()):
+                st.session_state.env_vars[k] = None
+            st.rerun()
