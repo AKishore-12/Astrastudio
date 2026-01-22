@@ -10,7 +10,8 @@ from litellm import completion
 
 def load_secrets_fron_env():
     load_dotenv(override=True)
-    if "env_vars" not in st.session_state:
+
+    if "credentials_initialized" not in st.session_state:
         st.session_state.env_vars = {
             "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
             "OPENAI_API_BASE": os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1/"),
@@ -21,8 +22,7 @@ def load_secrets_fron_env():
             "OLLAMA_HOST": os.getenv("OLLAMA_HOST"),
             "XAI_API_KEY": os.getenv("XAI_API_KEY"),
         }
-    else:
-        st.session_state.env_vars = st.session_state.env_vars
+        st.session_state.credentials_initialized = True
 
 def switch_environment(new_env_vars):
     for key, value in new_env_vars.items():

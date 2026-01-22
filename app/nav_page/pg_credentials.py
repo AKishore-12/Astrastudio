@@ -71,7 +71,17 @@ class PageCredentials:
 
         st.button("Apply credentials", on_click=self.apply_credentials)
 
-        if st.button("Clear session credentials"):
-            for k in list(st.session_state.get("env_vars", {}).keys()):
-                st.session_state.env_vars[k] = None
+        if st.button("Clear credentials"):
+            st.session_state.env_vars = {
+                "OPENAI_API_KEY": None,
+                "OPENAI_API_BASE": "https://api.openai.com/v1/",
+                "GROQ_API_KEY": None,
+                "GEMINI_API_KEY": None,
+                "LMSTUDIO_API_BASE": None,
+                "ANTHROPIC_API_KEY": None,
+                "OLLAMA_HOST": None,
+                "XAI_API_KEY": None,
+            }
+            st.session_state.credentials_initialized = True
             st.rerun()
+
